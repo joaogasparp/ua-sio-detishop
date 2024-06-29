@@ -1,0 +1,154 @@
+{% macro tab(label='', path='') %}
+<a
+  href="{{ path }}"
+  class="nav-bar__tab {% if request.path == path %}nav-bar__tab--active{% endif %}"
+>
+  {{ label }}
+</a>
+{% endmacro %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>DETISHOP</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
+    <link rel="stylesheet" href="{{ url_for( 'static', filename='fonts/icomoon/style.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for( 'static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for( 'static', filename='css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ url_for( 'static', filename='css/jquery-ui.css') }}">
+    <link rel="stylesheet" href="{{ url_for( 'static', filename='css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for( 'static', filename='css/owl.theme.default.min.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for( 'static', filename='css/aos.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for( 'static', filename='css/style.css') }}">
+
+    {% block header%}
+
+    {% endblock%}
+    
+  </head>
+  <body>
+
+  {% block modal %}
+  {% endblock %}
+
+  <div class="site-wrap">
+    <header class="site-navbar" role="banner">
+      <div class="site-navbar-top">
+        <div class="container">
+          <div class="row align-items-center">
+
+            <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+              <form action="/search" class="site-block-top-search">
+                <span class="icon icon-search2"></span>
+                <input type="text" name="query" class="form-control border-0" placeholder="Procurar">
+              </form>
+            </div>
+
+            <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
+              <div class="site-logo">
+                <a href="/" class="js-logo-clone">DETI</a>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-4 order-3 order-md-3 text-right">
+              <div class="site-top-icons">
+                  <ul>
+                      {% if session.user %}
+                          <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <span class="icon icon-person"></span>
+                              </a>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                  <a class="dropdown-item" href="/user_profiles">Perfil</a>
+                                  <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Terminar Sessão</a>
+                              </div>
+                          </li>
+                      {% else %}
+                          <li><a href="{{ url_for('auth.login') }}"><span class="icon icon-person"></span></a></li>
+                      {% endif %}
+                      <li><a href="/cart" class="site-cart"><span class="icon icon-shopping_cart"></span></a></li> 
+                      <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
+                  </ul>
+              </div> 
+          </div>
+
+          </div>
+        </div>
+      </div> 
+      <nav class="site-navigation text-right text-md-center" role="navigation">
+        <div class="container">
+          <ul class="site-menu js-clone-nav d-none d-md-block">
+            <li class="{{ 'active' if active_page == 'index' else '' }}"><a href="/">Início</a></li>
+            <li class="{{ 'active' if active_page == 'shop' else '' }}"><a href="/shop">Loja</a></li>
+            <li class="{{ 'active' if active_page == 'forum' else '' }}"><a href="/forum">Fórum</a></li>
+            <li class="{{ 'active' if active_page == 'about' else '' }}"><a href="/about">Sobre nós</a></li>          
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    {% block content %}
+
+    {% endblock %}
+    <footer class="site-footer border-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-lg-3">
+            <div class="block-5 mb-5">
+              <h3 class="footer-heading mb-4">Informações de Contacto</h3>
+              <ul class="list-unstyled">
+                <li class="address">DETI, Universidade de Aveiro, Portugal</li>
+                <li class="phone"><a href="tel://351234370355">+351 234 370 355</a></li>
+                <li class="email">deti-sec@ua.pt</li>
+              </ul>
+            </div>
+
+            <div class="block-7">
+              <form action="#" method="post">
+                <label for="email_subscribe" class="footer-heading">Subscreva</label>
+                <div class="form-group">
+                  <input type="text" class="form-control py-4" id="email_subscribe" placeholder="E-mail">
+                  <input type="submit" class="btn btn-sm btn-primary" value="Send">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="row pt-5 mt-5 text-center">
+          <div class="col-md-12">
+            <p>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+          </div>
+          
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="{{ url_for( 'static', filename='js/jquery-3.3.1.min.js') }}"></script>
+  <script src="{{ url_for( 'static', filename='js/jquery-ui.js') }}"></script>
+  <script src="{{ url_for( 'static', filename='js/popper.min.js') }}"></script>
+  <script src="{{ url_for( 'static', filename='js/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for( 'static', filename='js/owl.carousel.min.js') }}"></script>
+  <script src="{{ url_for( 'static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+  <script src="{{ url_for( 'static', filename='js/aos.js') }}"></script>
+
+  <script src="{{ url_for( 'static', filename='js/main.js') }}"></script>
+  
+  
+  <script src="{{ url_for( 'static', filename='js/cart.js') }}"></script>
+
+  {% block footer %}
+
+  {% endblock %}
+  </body>
+</html>

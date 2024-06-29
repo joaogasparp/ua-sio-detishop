@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block modal%}
+  
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Adicionar Produto</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="login-form" method="post" action="/user_profiles" enctype=multipart/form-data>
+          <div class="form-group">
+            <label for="name">Nome</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name" required>
+          </div>
+          <div class="form-group">
+            <label for="description">Descrição</label>
+            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter product description" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="price">Preço</label>
+            <input type="number" class="form-control" id="price" name="price" placeholder="Enter product price" required>
+          </div>
+          <div class="form-group">
+            <label for="stock">Stock</label>
+            <input type="number" class="form-control" id="stock" name="stock" placeholder="Enter product stock" required>
+          </div>
+          <div class="form-group">
+            <label for="category">Categoria</label>
+            <input type="text" class="form-control" id="category" name="category" placeholder="Enter product category" required>
+          </div>
+          <div class="form-group">
+            <label for="image">Imagem</label>
+            <input type="file" class="form-control-file" id="image" name="image" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-sm btn-primary">Adicionar Produto</button>
+          </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+  
+
+
+  <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="/">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Perfil</strong></div>
+        </div>
+      </div>
+    </div>  
+
+  <div class="site-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          {% if user_id == 1 %}
+            <h2 class="text-dark">Inventário:</h2>
+            <table class="table mt-4">
+              <thead>
+                <tr> <!-- id, name, description, price, stock, category, product_image -->
+                  <th scope="col">id</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Stock</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Image Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in items %}
+                  <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.stock }}</td>
+                    <td>{{ item.category }}</td>
+                    <td>{{ item.product_image }}</td>
+                    
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal">
+              Adicionar Produto
+            </button>
+
+            
+            {% if fail %}
+              <span class="text-danger">Ficheiro Inválido</span>
+            {% endif %}
+            
+
+
+            <!---------->
+            <h2 class="text-dark mt-4">Perfis de Usuários:</h2>
+            <table class="table mt-4">
+              <thead>
+                <tr>
+                  <th scope="col">Username</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Password</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for profile in all_profiles %}
+                  {% if profile.id != 1 %} {# Exclui o perfil do administrador #}
+                    <tr>
+                      <td>{{ profile.username }}</td>
+                      <td>{{ profile.email }}</td>
+                      <td>{{ profile.password }}</td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          {% endif %}
+          {% if user %}
+            <h2 class="site-section-heading text-uppercase">Olá, {{ user.username }}</h2>
+            <p class="site-section-sub-heading">Email: {{ user.email }}</p>
+            <a href="/changepass" class="btn btn-primary">Alterar Palavra-passe</a>
+          {% endif %}          
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block footer %}
+<script src="{{ url_for( 'static', filename='js/modal.js') }}"></script>
+{% endblock%}

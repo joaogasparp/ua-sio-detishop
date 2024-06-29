@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% set active_page = "shop" %}
+
+{% block header%}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock%}
+
+{% block content %}
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="/">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Shop</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+
+        <div class="row mb-5">
+          <div class="col-md-9 order-2">
+
+            <div class="row">
+              <div class="col-md-12 mb-5">
+                <div class="float-md-left mb-4"><h2 class="text-black h5">Shop All</h2></div>
+                <div class="d-flex">
+                  
+                  <!--<div class="btn-group mr-1 ml-md-auto">
+                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">Reference</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+                      <a class="dropdown-item" href="#">Relevance</a>
+                      <a class="dropdown-item" href="#">Name, A to Z</a>
+                      <a class="dropdown-item" href="#">Name, Z to A</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Price, low to high</a>
+                      <a class="dropdown-item" href="#">Price, high to low</a>
+                    </div>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+            <div id="item-list" class="row mb-5">
+
+              {% for item in items %}
+              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+                <div class="block-4 text-center border">
+                  <figure class="block-4-image">
+                    <a href="/product/{{ item.id }}"><img src="images/products/{{ item.product_image }}" alt="Image placeholder" class="img-fluid"></a>
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="/product/{{ item.id }}"> {{item.name}}</a></h3>
+                    <p class="mb-0">{{item.description}}</p>
+                    <p class="text-primary font-weight-bold">{{item.price}} €</p>
+                    <p class="mb-0 availability-product">
+                      {% if item.stock == 0%}
+                        <i class="fa fa-circle text-danger" aria-hidden="true"></i>
+                        <span>Sem stock</span>
+                      {% elif item.stock <= 5%}
+                        <i class="fa fa-circle text-warning" aria-hidden="true"></i>
+                        <span>Poucas unidades</span>
+                      {% else %}
+                        <i class="fa fa-circle text-success" aria-hidden="true"></i>
+                        <span>Disponivel</span>
+                      {% endif %}
+                      
+                    </p>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              
+        
+
+
+            </div>
+            
+          </div>
+
+          <div class="col-md-3 order-1 mb-5 mb-md-0">
+            <div class="border p-4 rounded mb-4">
+              <h3 class="mb-3 h6 text-uppercase text-black d-block">Categorias</h3>
+              <ul class="list-unstyled mb-0">
+                {% for i in categories %}
+                  <li class="mb-1">
+                    {% if i[0] == active_cat %}
+                      <div class="d-flex">
+                        <a href="/shop">(X)</a> 
+                        <span>{{ i[0] }}</span> 
+                        <span class="text-black ml-auto">({{ i[1] }})</span>
+                      </div>
+                    {% else %}
+                      <a href="/shop?category={{ i[0] }}" class="d-flex">
+                        <span>{{ i[0] }}</span> <span class="text-black ml-auto">({{ i[1] }})</span>
+                      </a>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+
+            
+
+
+            <div class="border p-4 rounded mb-4">
+              
+
+              <div class="mb-4">
+                <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter por Preço</h3>
+                <div id="slider-range" class="border-primary slider-range-onclick"></div>
+                <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white" disabled="" />
+              </div>
+
+              <div class="mb-4">
+                <h3 class="mb-3 h6 text-uppercase text-black d-block">Disponibilidade</h3>
+                <label for="s_sm" class="d-flex">
+                  <input type="checkbox" id="show_available" class="mr-2 mt-1"> <span class="text-black">Em Stock</span>
+                </label>
+                <label for="s_md" class="d-flex">
+                  <input type="checkbox" id="show_out_of_stock" class="mr-2 mt-1"> <span class="text-black">Esgotado</span>
+                </label>
+              </div>
+
+
+              {% if name %}
+                <a type="button" href="/shop" class="btn btn-outline-primary">✕ "{{ name }}"</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="site-section site-blocks-2">
+                <div class="row justify-content-center text-center mb-5">
+                  <div class="col-md-7 site-section-heading pt-4">
+                    <h2>Categories</h2>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
+                    <a class="block-2-item" href="#">
+                      <figure class="image">
+                        <img src="images/women.jpg" alt="" class="img-fluid">
+                      </figure>
+                      <div class="text">
+                        <span class="text-uppercase">Collections</span>
+                        <h3>Women</h3>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="100">
+                    <a class="block-2-item" href="#">
+                      <figure class="image">
+                        <img src="images/children.jpg" alt="" class="img-fluid">
+                      </figure>
+                      <div class="text">
+                        <span class="text-uppercase">Collections</span>
+                        <h3>Children</h3>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="200">
+                    <a class="block-2-item" href="#">
+                      <figure class="image">
+                        <img src="images/men.jpg" alt="" class="img-fluid">
+                      </figure>
+                      <div class="text">
+                        <span class="text-uppercase">Collections</span>
+                        <h3>Men</h3>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+<script src="{{ url_for('static', filename='js/filters.js') }}"></script>
+{% endblock %}
+

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% set active_page = "forum" %}
+
+{% block content %}
+  <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="/">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Forum</strong></div>
+        </div>
+      </div>
+    </div>  
+
+  <div class="container mt-5">
+    <h2>Forum</h2>
+
+    <form method="post" action="/forum">
+      <div class="form-group">
+        <label for="title">Título:</label>
+        <input type="text" class="form-control" id="title" name="title" required>
+      </div>
+      <div class="form-group">
+        <label for="message">Mensagem:</label>
+        <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Publicar</button>
+    </form>
+
+    <hr>
+
+    <div id="posts">
+    <!--{% for post in forum_posts %}
+      <div class="card mt-3">
+        <div class="card-body">
+          <h5 class="card-title">Título: {{ post.title }}</h5>
+          <p class="card-text">Mensagem: {{ post.message }}</p>
+        </div>
+      </div>
+    {% endfor %}-->
+    </div>
+    <p></p>
+  </div>
+{% endblock %}
+
+
+{% block footer %}
+<script src="{{ url_for('static', filename='js/forum.js') }}"></script>
+{% endblock %}

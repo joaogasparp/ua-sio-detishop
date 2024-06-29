@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% set active_page = "product" %}
+
+{% block header%}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock%}
+
+
+{% block content %}
+
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0">
+            <a href="/">Home</a> 
+            <span class="mx-2 mb-0">/</span>
+            <a href="/shop">Shop</a>
+            <span class="mx-2 mb-0">/</span>
+            <strong class="text-black">{{product.name}}</strong></div>
+        </div>
+      </div>
+    </div>  
+
+    
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <img src="{{ url_for('static', filename='images/products/' + product.product_image) }}" alt="Image" class="img-fluid">
+          </div>
+          <div class="col-md-6">
+            <h2 class="text-black">{{ product.name }}</h2>
+            <p>{{ product.description }}</p>
+            <p class="availability-product">
+              {% if product.stock == 0%}
+                <i class="fa fa-circle text-danger" aria-hidden="true"></i>
+                <span>Sem stock</span>
+              {% elif product.stock <= 5%}
+                <i class="fa fa-circle text-warning" aria-hidden="true"></i>
+                <span>Poucas unidades</span>
+              {% else %}
+                <i class="fa fa-circle text-success" aria-hidden="true"></i>
+                <span>Disponivel</span>
+              {% endif %}
+              
+            </p>
+            <p><strong class="text-primary h4">€{{ product.price }}</strong></p>
+            
+            <div class="mb-3">
+              <form method="post" action="{{ url_for('product', product_id=product.id) }}">
+                <div class="input-group mb-3" style="max-width: 120px;">
+                  <div class="input-group-prepend">
+                    <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+                  </div>
+                  <input type="text" class="form-control text-center" name="quantidade" value="1" min="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
+                  </div>
+                </div>
+                <button type="submit" class="buy-now btn btn-sm btn-primary">Adicionar ao Carrinho</button>
+                
+              </form>
+            </div>
+
+            {% if alert == "success" %}
+              <p class="text-success ml-2"><strong>Produto adicionado ao carrinho.</strong></p>
+            {% elif alert == "fail" %}
+              <p class="text-danger ml-2"><strong>Falha ao adicionar produto.</strong></p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="site-section block-3 site-blocks-2 bg-light">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-7 site-section-heading text-center pt-4">
+            <h2>Featured Products</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="nonloop-block-3 owl-carousel">
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="{{ url_for( 'static', filename='images/products/cloth_1.jpg') }}" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">Tank Top</a></h3>
+                    <p class="mb-0">Finding perfect t-shirt</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="{{ url_for( 'static', filename='images/products/shoe_1.jpg') }}" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">Corater</a></h3>
+                    <p class="mb-0">Finding perfect products</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="{{ url_for( 'static', filename='images/products/cloth_2.jpg') }}" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">Polo Shirt</a></h3>
+                    <p class="mb-0">Finding perfect products</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="{{ url_for( 'static', filename='images/products/cloth_3.jpg') }}" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">T-Shirt Mockup</a></h3>
+                    <p class="mb-0">Finding perfect products</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="{{ url_for( 'static', filename='images/products/shoe_1.jpg') }}" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">Corater</a></h3>
+                    <p class="mb-0">Finding perfect products</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

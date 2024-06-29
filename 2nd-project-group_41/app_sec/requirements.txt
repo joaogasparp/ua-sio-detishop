@@ -1,0 +1,6 @@
+flask>=2.2.2
+
+werkzeug
+authlib>=1.2.0
+requests>=2.28.2
+

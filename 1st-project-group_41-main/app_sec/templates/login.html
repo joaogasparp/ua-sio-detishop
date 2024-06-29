@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/our_style.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form class="login-form" method="post" action="/login">
+            <div class="form-group">
+                <label for="username">Utilizador:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" href="/">Entrar</button>
+            </div>
+        </form>
+        <div style="font-size: 14px;" class="register-link">
+            Ainda não tens conta? <a href="/register">Regista-te</a><br>
+            Esqueceste a palavra-passe? <a href="/reset_pass">Recupera aqui</a>
+        </div>
+        {% if error %}
+            <div id="error-message" style="color: red;">{{ error }}</div>
+        {% endif %}
+        {% if success %}
+            <div id="success-message" style="color: green;">{{ success }}</div>
+        {% endif %}
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        const success = urlParams.get('success');
+
+        if (error === 'login_failed') {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = 'O Username e a Palavra-Passe não coincidem. Tente novamente.';
+        }
+
+        if (success === 'registration_successful') {
+            const successMessage = document.getElementById('success-message');
+            successMessage.textContent = 'Registo concluído com sucesso. Inicie sessão!';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registo</title>
+    <link rel="stylesheet" href="/css/our_style.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Registo</h2>
+        <form class="login-form" method="post" action="/register">
+            <div class="form-group">
+                <label for="username">Utilizador:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirmar senha:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" href="/login">Registar</button>
+            </div>
+        </form>
+        <div style="font-size: 14px;" class="register-link">Já tens conta? <a href="/login">Entra</a></div>
+        {% if error %}
+        <div id="error-message" style="color: red;">
+        
+        {{ error }}
+        
+            {% if error_list %} 
+                
+                <div id="error-message" style="color: red;">{{ error_list }}</div>
+        
+            {% endif %}
+        
+        </div>
+        {% endif %}
+        {% if success %}
+        <div id="success-message" style="color: green;">{{ success }}</div>
+        {% endif %}
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+
+        if (error === 'email_taken') {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = 'E-mail já com registo na página. Faça login!';
+        } else if (error === 'username_taken') {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = 'Username já utilizado.';
+        }
+    </script>
+</body>
+</html>
